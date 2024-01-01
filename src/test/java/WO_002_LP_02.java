@@ -15,6 +15,8 @@ public class WO_002_LP_02 extends Hooks {
 
 	@Test
 	public void testLoginFunctionWithInValidValues() {
+
+		// Navigate to web order page and login
 		WebElement webOrderButton = driver
 			.findElement(By.cssSelector("[class='text-fifth fw-semibold px-3 fs-3 nav-link']:nth-child(1)"));
 		webOrderButton.click();
@@ -28,15 +30,10 @@ public class WO_002_LP_02 extends Hooks {
 		WebElement loginButton = driver.findElement(By.cssSelector("#login-button"));
 		loginButton.click();
 
-		Wait wait = new FluentWait(driver).withTimeout(Duration.ofSeconds(10))
-			.pollingEvery(Duration.ofMillis(500))
-			.ignoring(NoSuchElementException.class);
-		WebElement alertText = (WebElement) wait.until(new Function<WebDriver, WebElement>() {
-			public WebElement apply(WebDriver driver) {
-				return driver.findElement(By.id("username-error-alert"));
-			}
-		});
+		// Find the alert message
+		WebElement alertText = driver.findElement(By.id("username-error-alert"));
 
+		// Verify the alert message after the unsuccessful login process
 		assertEquals("Invalid username", alertText.getText());
 	}
 
